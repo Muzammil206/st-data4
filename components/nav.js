@@ -3,8 +3,9 @@
 import Link from "next/link"
 import { Menu, X, Satellite } from "lucide-react"
 import { useState } from 'react'
-import Logo from "@/components/public/logo.webp"
+import Logo from "./public/log.webp" 
 import { Button } from "@/components/ui/button"
+import Image from "next/image"
 
 import {
   NavigationMenu,
@@ -62,9 +63,10 @@ export default function Nav() {
     <header className="bg-white shadow-sm">
         <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
         <div className="flex lg:flex-1">
-          <Link href="/" className="-m-1.5 p-1.5">
+          <Link href="/" className="-m-1.5 ">
             <span className="sr-only">Nigerian Satellite Data Platform</span>
-            <img className="h-8 w-auto" src={ Logo } alt="NSDP Logo" />
+            
+            <Image src={Logo}  className="h-9 w-auto" alt="NSDP Logo"/>
           </Link>
         </div>
         <div className="flex lg:hidden">
@@ -130,9 +132,9 @@ export default function Nav() {
             <div className="flex items-center justify-between">
               <Link href="/" className="-m-1.5 p-1.5">
                 <span className="sr-only">Nigerian Satellite Data Platform</span>
-                <img
+                <Image
                   className="h-8 w-auto"
-                  src="/placeholder.svg?height=32&width=32"
+                  src={Logo}
                   alt="NSDP Logo"
                 />
               </Link>
@@ -149,7 +151,7 @@ export default function Nav() {
               <div className="-my-6 divide-y divide-gray-500/10">
                 <div className="space-y-2 py-6">
                   {navigation.map((item) => (
-                    <React.Fragment key={item.name}>
+                    <div key={item.name}>
                       <Link
                         href={item.href}
                         className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
@@ -169,7 +171,7 @@ export default function Nav() {
                           ))}
                         </div>
                       )}
-                    </React.Fragment>
+                    </div>
                   ))}
                 </div>
                 <div className="py-6">

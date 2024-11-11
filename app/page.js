@@ -6,24 +6,26 @@ import { ChevronRight, Globe, Database, Search, BarChart3, Satellite, Download }
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import Nav from "@/components/nav"
+import Bg from  "/components/public/nasa.jpg"
+
 
 export default function LandingPage() {
   const [email, setEmail] = useState('')
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-100 to-pink-100 text-gray-800">
+    <div className="min-h-screen  text-gray-800">
        <Nav/>
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
          
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-200/70 to-pink-200/70"></div>
+          <div className="absolute w-auto  inset-0 bg-cover bg-center bg-no-repeat bg-fixed "  style={{  backgroundImage: "url('https://images.pexels.com/photos/23789/pexels-photo.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')" }}></div>
         </div>
-        <div className="relative z-10 text-center px-4">
+        <div className="relative z-10 text-center px-4 mt-6">
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-5xl md:text-7xl font-bold mb-4 text-green-900"
+            className="text-5xl md:text-7xl font-bold mb-4 text-white"
           >
             Nigerian Satellite Data Platform
           </motion.h1>
@@ -31,7 +33,7 @@ export default function LandingPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-xl md:text-2xl mb-8 text-green-800"
+            className="text-xl md:text-2xl mb-8 text-white"
           >
             Visualize and access serene satellite data for Nigeria and beyond
           </motion.p>
@@ -48,7 +50,7 @@ export default function LandingPage() {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 bg-blue-50">
+      <section className="py-20 bg-gradient-to-r from-blue-200/70 to-pink-200/70">
         <div className="container mx-auto px-4">
           <h2 className="text-4xl font-bold text-center mb-12 text-green-800">Platform Features</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
