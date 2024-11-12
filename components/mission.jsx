@@ -54,7 +54,7 @@ export default function Vision() {
         </motion.div>
       </div>
 
-      {/* Scrolling Indicators */}
+      
       <div className="absolute bottom-8 left-0 right-0 flex justify-center space-x-4 z-20">
         {[0, 1, 2].map((_, index) => (
           <motion.div
