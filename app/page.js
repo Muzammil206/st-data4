@@ -6,7 +6,7 @@ import { ChevronRight, Globe, Database, Search, BarChart3, Satellite, Download }
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import Nav from "@/components/nav"
-import Bg from  "/components/public/nasa.jpg"
+import Vision from '@/components/mission'
 
 
 export default function LandingPage() {
@@ -78,7 +78,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Data Sources Section */}
+      <Vision/>
       <section className="py-20 bg-pink-50">
         <div className="container mx-auto px-4">
           <h2 className="text-4xl font-bold text-center mb-12 text-green-800">Our Data Sources</h2>
