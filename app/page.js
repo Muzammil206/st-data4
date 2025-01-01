@@ -2,15 +2,104 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { ChevronRight, Globe, Database, Search, BarChart3, Satellite, Download } from 'lucide-react'
+import { ChevronRight, Globe, Database, Search, BarChart3, Satellite, Download, ArrowRight } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import Nav from "@/components/nav"
 import Vision from '@/components/mission'
 
 
+const BackgroundIllustration = () => (
+  <svg
+    className="absolute inset-0 w-full h-full"
+    viewBox="0 0 1000 1000"
+    preserveAspectRatio="xMidYMid slice"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <defs>
+      <radialGradient id="bg-gradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+        <stop offset="0%" stopColor="#1E3A8A" stopOpacity="0.6" />
+        <stop offset="100%" stopColor="#1E3A8A" stopOpacity="0.2" />
+      </radialGradient>
+      <linearGradient id="satellite-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#3B82F6" />
+        <stop offset="100%" stopColor="#1D4ED8" />
+      </linearGradient>
+    </defs>
+    
+    {/* Background */}
+    <rect width="100%" height="100%" fill="url(#bg-gradient)" />
+    
+    {/* Earth */}
+    <circle cx="500" cy="1100" r="800" fill="#1E40AF" fillOpacity="0.3" />
+    <circle cx="500" cy="1100" r="650" fill="#2563EB" fillOpacity="0.3" />
+    
+    {/* Grid lines */}
+    {[...Array(10)].map((_, i) => (
+      <path
+        key={`grid-${i}`}
+        d={`M0 ${i * 100} L1000 ${i * 100} M${i * 100} 0 L${i * 100} 1000`}
+        stroke="#60A5FA"
+        strokeOpacity="0.15"
+        strokeWidth="1"
+      />
+    ))}
+    
+    {/* Satellites */}
+    {[...Array(5)].map((_, i) => (
+      <g key={`satellite-${i}`} transform={`translate(${200 + i * 150}, ${150 + i * 100}) rotate(${45 + i * 30})`}>
+        <rect x="-20" y="-10" width="40" height="20" fill="url(#satellite-gradient)" />
+        <rect x="-30" y="-2" width="60" height="4" fill="url(#satellite-gradient)" />
+      </g>
+    ))}
+    
+    {/* Data points */}
+    {[...Array(50)].map((_, i) => (
+      <circle
+        key={`data-${i}`}
+        cx={Math.random() * 1000}
+        cy={Math.random() * 1000}
+        r={Math.random() * 3 + 1}
+        fill="#60A5FA"
+        fillOpacity={Math.random() * 0.7 + 0.3}
+      />
+    ))}
+    
+    {/* Connection lines */}
+    {[...Array(20)].map((_, i) => {
+      const x1 = Math.random() * 1000;
+      const y1 = Math.random() * 1000;
+      const x2 = Math.random() * 1000;
+      const y2 = Math.random() * 1000;
+      return (
+        <line
+          key={`connection-${i}`}
+          x1={x1}
+          y1={y1}
+          x2={x2}
+          y2={y2}
+          stroke="#60A5FA"
+          strokeOpacity="0.3"
+          strokeWidth="1"
+        />
+      );
+    })}
+  </svg>
+);
+
+
 export default function LandingPage() {
   const [email, setEmail] = useState('')
+  const [hoveredFeature, setHoveredFeature] = useState(null)
+
+  const features = [
+    { icon: Globe, title: "Comprehensive Coverage", description: "Access satellite data for Nigeria and surrounding regions", color: "from-blue-400 to-cyan-300" },
+    { icon: Database, title: "Diverse Data Sources", description: "Integrate Nigerian satellite data with NASA and other global sources", color: "from-indigo-400 to-purple-300" },
+    { icon: Search, title: "Advanced Search", description: "Find specific data sets with our powerful search tools", color: "from-green-400 to-emerald-300" },
+    { icon: BarChart3, title: "Data Visualization", description: "Create stunning visualizations with our built-in tools", color: "from-red-400 to-pink-300" },
+    { icon: Satellite, title: "Real-time Updates", description: "Get the latest satellite imagery as soon as it's available", color: "from-yellow-400 to-amber-300" },
+    { icon: Download, title: "Easy Export", description: "Download data in various formats for your analysis", color: "from-purple-400 to-fuchsia-300" },
+  ]
 
   return (
     <div className="min-h-screen  text-gray-800">
@@ -49,35 +138,44 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="py-20 bg-gradient-to-r from-blue-200/70 to-pink-200/70">
-        <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-12 text-green-800">Platform Features</h2>
+      <section className="relative py-20 overflow-hidden">
+        <BackgroundIllustration />
+        <div className="container relative z-10 mx-auto px-4">
+          <h2 className="text-4xl font-bold text-center mb-12 text-white">Platform Features</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              { icon: Globe, title: "Comprehensive Coverage", description: "Access satellite data for Nigeria and surrounding regions" },
-              { icon: Database, title: "Diverse Data Sources", description: "Integrate Nigerian satellite data with NASA and other global sources" },
-              { icon: Search, title: "Advanced Search", description: "Find specific data sets with our powerful search tools" },
-              { icon: BarChart3, title: "Data Visualization", description: "Create stunning visualizations with our built-in tools" },
-              { icon: Satellite, title: "Real-time Updates", description: "Get the latest satellite imagery as soon as it's available" },
-              { icon: Download, title: "Easy Export", description: "Download data in various formats for your analysis" },
-            ].map((feature, index) => (
+            {features.map((feature, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
+                className="relative bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden group"
+                onMouseEnter={() => setHoveredFeature(index)}
+                onMouseLeave={() => setHoveredFeature(null)}
               >
-                <feature.icon className="h-12 w-12 text-green-600 mb-4" />
-                <h3 className="text-xl font-semibold mb-2 text-green-800">{feature.title}</h3>
-                <p className="text-gray-600">{feature.description}</p>
+                <div className={`absolute inset-0 bg-gradient-to-br ${feature.color} opacity-0 group-hover:opacity-20 transition-opacity duration-300`}></div>
+                <div className="relative z-10">
+                  <feature.icon className="h-12 w-12 text-blue-300 mb-4 transform group-hover:scale-110 transition-transform duration-300" />
+                  <h3 className="text-xl font-semibold mb-2 text-white">{feature.title}</h3>
+                  <p className="text-gray-300 mb-4">{feature.description}</p>
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: hoveredFeature === index ? 1 : 0, y: hoveredFeature === index ? 0 : 10 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <a href="#" className="inline-flex items-center text-blue-300 hover:text-blue-200 transition-colors duration-300">
+                      Learn More <ArrowRight className="ml-2 h-4 w-4" />
+                    </a>
+                  </motion.div>
+                </div>
+                <div className="absolute top-2 right-2">
+                  <span className="bg-blue-600 text-white text-xs font-medium px-2.5 py-0.5 rounded-full">New</span>
+                </div>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
-
       <Vision/>
       <section className="py-20 bg-pink-50">
         <div className="container mx-auto px-4">
