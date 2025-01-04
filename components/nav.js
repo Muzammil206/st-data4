@@ -68,12 +68,15 @@ export default function Nav() {
   }, []);
 
   return (
-    <header className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-black/80 backdrop-blur-md' : 'bg-transparent'}`}>
+    <header className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-slate-900/80 backdrop-blur-md shadow-lg' : 'bg-transparent'}`}>
       <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
         <div className="flex lg:flex-1">
           <Link href="/" className="-m-1.5 p-1.5">
             <span className="sr-only">Nigerian Satellite Data Platform</span>
-            <Image src={Logo} className="h-9 w-auto" alt="NSDP Logo"/>
+            <div className="relative group">
+              <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full blur opacity-30 group-hover:opacity-60 transition duration-500"></div>
+              <Image src={Logo} className="h-9 w-auto relative" alt="NSDP Logo"/>
+            </div>
           </Link>
         </div>
         <div className="flex lg:hidden">
@@ -93,16 +96,16 @@ export default function Nav() {
                 <NavigationMenuItem key={item.name}>
                   {item.children ? (
                     <>
-                      <NavigationMenuTrigger className="text-gray-300 hover:text-white transition-colors">
+                      <NavigationMenuTrigger className="text-blue-300 hover:text-blue-100 transition-colors duration-300 font-medium">
                         {item.name}
                       </NavigationMenuTrigger>
                       <NavigationMenuContent>
-                        <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] bg-black/90 backdrop-blur-md rounded-lg">
+                        <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] bg-slate-900/95 backdrop-blur-md rounded-lg border border-blue-500/20">
                           {item.children.map((child) => (
                             <li key={child.name}>
                               <NavigationMenuLink asChild>
                                 <a
-                                  className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-white/10 focus:bg-white/10 text-gray-300 hover:text-white"
+                                  className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-blue-900/30 focus:bg-blue-900/30 text-blue-200 hover:text-blue-100"
                                   href={child.href}
                                 >
                                   <div className="text-sm font-medium leading-none">{child.name}</div>
@@ -118,7 +121,7 @@ export default function Nav() {
                     </>
                   ) : (
                     <Link href={item.href} legacyBehavior passHref>
-                      <NavigationMenuLink className={`${navigationMenuTriggerStyle()} text-gray-300 hover:text-white bg-transparent hover:bg-white/10`}>
+                      <NavigationMenuLink className={`${navigationMenuTriggerStyle()} text-blue-300 hover:text-blue-100 bg-transparent hover:bg-blue-900/30 transition-all duration-300 font-medium`}>
                         {item.name}
                       </NavigationMenuLink>
                     </Link>
@@ -129,7 +132,7 @@ export default function Nav() {
           </NavigationMenu>
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <Button asChild variant="outline" className="text-white border-white hover:bg-white hover:text-black transition-colors">
+          <Button asChild variant="outline" className="text-blue-300 border-blue-500 hover:bg-blue-900/50 hover:text-blue-100 transition-all duration-300">
             <Link href="/login">Log in</Link>
           </Button>
         </div>
