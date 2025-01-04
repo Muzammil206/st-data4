@@ -1,8 +1,8 @@
 "use client"
 
 import Link from "next/link"
-import { Menu, X, Satellite } from "lucide-react"
-import { useState } from 'react'
+import { Menu, X, Satellite } from 'lucide-react'
+import { useState, useEffect } from 'react'
 import Logo from "./public/log.webp" 
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
@@ -16,8 +16,6 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
-
-
 
 const navigation = [
   { name: "Home", href: "/" },
@@ -58,21 +56,30 @@ const navigation = [
 
 export default function Nav() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
-    <header className="bg-white shadow-sm">
-        <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
+    <header className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-black/80 backdrop-blur-md' : 'bg-transparent'}`}>
+      <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
         <div className="flex lg:flex-1">
-          <Link href="/" className="-m-1.5 ">
+          <Link href="/" className="-m-1.5 p-1.5">
             <span className="sr-only">Nigerian Satellite Data Platform</span>
-            
-            <Image src={Logo}  className="h-9 w-auto" alt="NSDP Logo"/>
+            <Image src={Logo} className="h-9 w-auto" alt="NSDP Logo"/>
           </Link>
         </div>
         <div className="flex lg:hidden">
           <Button
             variant="ghost"
-            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
+            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-300 hover:text-white"
             onClick={() => setMobileMenuOpen(true)}
           >
             <span className="sr-only">Open main menu</span>
@@ -86,18 +93,20 @@ export default function Nav() {
                 <NavigationMenuItem key={item.name}>
                   {item.children ? (
                     <>
-                      <NavigationMenuTrigger>{item.name}</NavigationMenuTrigger>
+                      <NavigationMenuTrigger className="text-gray-300 hover:text-white transition-colors">
+                        {item.name}
+                      </NavigationMenuTrigger>
                       <NavigationMenuContent>
-                        <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                        <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] bg-black/90 backdrop-blur-md rounded-lg">
                           {item.children.map((child) => (
                             <li key={child.name}>
                               <NavigationMenuLink asChild>
                                 <a
-                                  className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-slate-100 focus:bg-slate-100"
+                                  className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-white/10 focus:bg-white/10 text-gray-300 hover:text-white"
                                   href={child.href}
                                 >
                                   <div className="text-sm font-medium leading-none">{child.name}</div>
-                                  <p className="line-clamp-2 text-sm leading-snug text-slate-500">
+                                  <p className="line-clamp-2 text-sm leading-snug text-gray-400">
                                     {child.description}
                                   </p>
                                 </a>
@@ -109,7 +118,7 @@ export default function Nav() {
                     </>
                   ) : (
                     <Link href={item.href} legacyBehavior passHref>
-                      <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                      <NavigationMenuLink className={`${navigationMenuTriggerStyle()} text-gray-300 hover:text-white bg-transparent hover:bg-white/10`}>
                         {item.name}
                       </NavigationMenuLink>
                     </Link>
@@ -120,15 +129,15 @@ export default function Nav() {
           </NavigationMenu>
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <Button asChild>
+          <Button asChild variant="outline" className="text-white border-white hover:bg-white hover:text-black transition-colors">
             <Link href="/login">Log in</Link>
           </Button>
         </div>
       </nav>
       {mobileMenuOpen && (
         <div className="lg:hidden" role="dialog" aria-modal="true">
-          <div className="fixed inset-0 z-50"></div>
-          <div className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+          <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm" onClick={() => setMobileMenuOpen(false)}></div>
+          <div className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-black px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-white/10">
             <div className="flex items-center justify-between">
               <Link href="/" className="-m-1.5 p-1.5">
                 <span className="sr-only">Nigerian Satellite Data Platform</span>
@@ -140,7 +149,7 @@ export default function Nav() {
               </Link>
               <Button
                 variant="ghost"
-                className="-m-2.5 rounded-md p-2.5 text-gray-700"
+                className="-m-2.5 rounded-md p-2.5 text-gray-300 hover:text-white"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 <span className="sr-only">Close menu</span>
@@ -148,13 +157,13 @@ export default function Nav() {
               </Button>
             </div>
             <div className="mt-6 flow-root">
-              <div className="-my-6 divide-y divide-gray-500/10">
+              <div className="-my-6 divide-y divide-gray-500/25">
                 <div className="space-y-2 py-6">
                   {navigation.map((item) => (
                     <div key={item.name}>
                       <Link
                         href={item.href}
-                        className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                        className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-white/10"
                       >
                         {item.name}
                       </Link>
@@ -164,7 +173,7 @@ export default function Nav() {
                             <Link
                               key={child.name}
                               href={child.href}
-                              className="-mx-3 block rounded-lg px-3 py-2 text-sm leading-7 text-gray-700 hover:bg-gray-50"
+                              className="-mx-3 block rounded-lg px-3 py-2 text-sm leading-7 text-gray-300 hover:bg-white/10 hover:text-white"
                             >
                               {child.name}
                             </Link>
@@ -175,7 +184,7 @@ export default function Nav() {
                   ))}
                 </div>
                 <div className="py-6">
-                  <Button asChild className="w-full">
+                  <Button asChild variant="outline" className="w-full text-white border-white hover:bg-white hover:text-black transition-colors">
                     <Link href="/login">Log in</Link>
                   </Button>
                 </div>
@@ -187,3 +196,4 @@ export default function Nav() {
     </header>
   );
 }
+

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Search, Layers, Calendar, BarChart, Download, Settings, ZoomIn, ZoomOut, Maximize, RotateCcw, Satellite } from 'lucide-react'
+import { Search, ChevronDown, ChevronRight, Layers, Calendar, BarChart, Download, Settings, Satellite, HelpCircle } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
@@ -69,120 +69,104 @@ export function Sidebar() {
   }
 
   return (
-    <div className="w-80 bg-background border-r h-screen flex flex-col">
-      <div className="p-4 border-b">
-        <h1 className="text-2xl font-bold mb-2">Satellite Data Portal</h1>
+    <div className="w-80 bg-[#1a1a1a] text-white h-screen flex flex-col">
+      <div className="p-4 border-b border-gray-700">
+        <h1 className="text-xl font-bold mb-4">Satellite Data Portal</h1>
         <div className="relative">
-          <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500" />
-          <Input className="pl-8" placeholder="Search satellite data..." />
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+          <Input className="pl-10 bg-[#2a2a2a] border-gray-700 text-white placeholder-gray-400" placeholder="Search satellite data..." />
         </div>
       </div>
       
       <ScrollArea className="flex-grow">
         <div className="p-4 space-y-6">
-          <div>
-            <h2 className="text-lg font-semibold mb-2 flex items-center">
-              <Layers className="mr-2" /> NASRDA Imagery
-            </h2>
-            <Accordion type="multiple" className="w-full">
-              {nasrdaImagery.map((yearGroup) => (
-                <AccordionItem value={yearGroup.id} key={yearGroup.id}>
-                  <AccordionTrigger>{yearGroup.name}</AccordionTrigger>
-                  <AccordionContent>
-                    {yearGroup.layers.map((layer) => (
-                      <div key={layer.id} className="flex items-center space-x-2 py-1">
-                        <Checkbox 
-                          id={`layer-${layer.id}`} 
-                          checked={selectedLayers.includes(layer.id)}
-                          onCheckedChange={() => toggleLayer(layer.id)}
-                        />
-                        <label htmlFor={`layer-${layer.id}`} className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                          {layer.name}
-                        </label>
-                      </div>
-                    ))}
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
-          </div>
-
-          <div>
-            <h2 className="text-lg font-semibold mb-2 flex items-center">
-              <Layers className="mr-2" /> Satellite Layers
-            </h2>
-            <Accordion type="single" collapsible className="w-full">
-              {satelliteLayers.map((layer) => (
-                <AccordionItem value={layer.id} key={layer.id}>
-                  <AccordionTrigger>{layer.name}</AccordionTrigger>
-                  <AccordionContent>
-                    <div className="space-y-2">
-                      <p className="text-sm text-gray-600">{layer.description}</p>
-                      <div className="flex items-center space-x-2">
-                        <Checkbox 
-                          id={`layer-${layer.id}`} 
-                          checked={selectedLayers.includes(layer.id)}
-                          onCheckedChange={() => toggleLayer(layer.id)}
-                        />
-                        <label htmlFor={`layer-${layer.id}`} className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                          Show on map
-                        </label>
-                      </div>
+          <AccordionSection title="NASRDA Imagery" icon={Layers}>
+            {nasrdaImagery.map((yearGroup) => (
+              <AccordionItem value={yearGroup.id} key={yearGroup.id} className="border-b-0">
+                <AccordionTrigger className="hover:no-underline hover:bg-[#2a2a2a] py-2 px-4">
+                  {yearGroup.name}
+                </AccordionTrigger>
+                <AccordionContent className="pt-1 pb-2">
+                  {yearGroup.layers.map((layer) => (
+                    <div key={layer.id} className="flex items-center space-x-2 py-1 px-4 hover:bg-[#2a2a2a]">
+                      <Checkbox 
+                        id={`layer-${layer.id}`} 
+                        checked={selectedLayers.includes(layer.id)}
+                        onCheckedChange={() => toggleLayer(layer.id)}
+                        className="border-gray-600 text-blue-500"
+                      />
+                      <label htmlFor={`layer-${layer.id}`} className="text-sm font-medium leading-none cursor-pointer">
+                        {layer.name}
+                      </label>
                     </div>
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
-          </div>
+                  ))}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </AccordionSection>
 
-          <div>
-            <h2 className="text-lg font-semibold mb-2 flex items-center">
-              <Calendar className="mr-2" /> Time Range
-            </h2>
+          <AccordionSection title="Satellite Layers" icon={Satellite}>
+            {satelliteLayers.map((layer) => (
+              <AccordionItem value={layer.id} key={layer.id} className="border-b-0">
+                <AccordionTrigger className="hover:no-underline hover:bg-[#2a2a2a] py-2 px-4">
+                  {layer.name}
+                </AccordionTrigger>
+                <AccordionContent className="pt-1 pb-2">
+                  <div className="space-y-2 px-4">
+                    <p className="text-sm text-gray-400">{layer.description}</p>
+                    <div className="flex items-center space-x-2">
+                      <Checkbox 
+                        id={`layer-${layer.id}`} 
+                        checked={selectedLayers.includes(layer.id)}
+                        onCheckedChange={() => toggleLayer(layer.id)}
+                        className="border-gray-600 text-blue-500"
+                      />
+                      <label htmlFor={`layer-${layer.id}`} className="text-sm font-medium leading-none cursor-pointer">
+                        Show on map
+                      </label>
+                    </div>
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </AccordionSection>
+
+          <Section title="Time Range" icon={Calendar}>
             <Select value={timeRange} onValueChange={setTimeRange}>
-              <SelectTrigger>
+              <SelectTrigger className="w-full bg-[#2a2a2a] border-gray-700 text-white">
                 <SelectValue placeholder="Select time range" />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="bg-[#2a2a2a] border-gray-700 text-white">
                 <SelectItem value="24h">Last 24 Hours</SelectItem>
                 <SelectItem value="7d">Last 7 Days</SelectItem>
                 <SelectItem value="30d">Last 30 Days</SelectItem>
                 <SelectItem value="1y">Last Year</SelectItem>
               </SelectContent>
             </Select>
-          </div>
+          </Section>
 
-          <div>
-            <h2 className="text-lg font-semibold mb-2 flex items-center">
-              <BarChart className="mr-2" /> Data Analysis
-            </h2>
-            <Button className="w-full">Generate Report</Button>
-          </div>
+          <Section title="Data Analysis" icon={BarChart}>
+            <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white">Generate Report</Button>
+          </Section>
 
-          <div>
-            <h2 className="text-lg font-semibold mb-2 flex items-center">
-              <Download className="mr-2" /> Download Options
-            </h2>
+          <Section title="Download Options" icon={Download}>
             <Select>
-              <SelectTrigger>
+              <SelectTrigger className="w-full bg-[#2a2a2a] border-gray-700 text-white">
                 <SelectValue placeholder="Select format" />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="bg-[#2a2a2a] border-gray-700 text-white">
                 <SelectItem value="geotiff">GeoTIFF</SelectItem>
                 <SelectItem value="shapefile">Shapefile</SelectItem>
                 <SelectItem value="netcdf">NetCDF</SelectItem>
                 <SelectItem value="csv">CSV</SelectItem>
               </SelectContent>
             </Select>
-          </div>
+          </Section>
 
-          <div>
-            <h2 className="text-lg font-semibold mb-2 flex items-center">
-              <Settings className="mr-2" /> Layer Settings
-            </h2>
+          <Section title="Layer Settings" icon={Settings}>
             <div className="space-y-4">
               <div>
-                <label htmlFor="opacity" className="text-sm font-medium">
+                <label htmlFor="opacity" className="text-sm font-medium block mb-2">
                   Opacity: {opacity}%
                 </label>
                 <Slider
@@ -192,51 +176,63 @@ export function Sidebar() {
                   step={1}
                   value={[opacity]}
                   onValueChange={(value) => setOpacity(value[0])}
+                  className="[&_[role=slider]]:bg-blue-500"
                 />
               </div>
             </div>
-          </div>
+          </Section>
 
-          <div>
-            <h2 className="text-lg font-semibold mb-2 flex items-center">
-              <Satellite className="mr-2" /> NASA Data
-            </h2>
-            <Accordion type="single" collapsible className="w-full">
-              {nasaData.map((item) => (
-                <AccordionItem value={item.id} key={item.id}>
-                  <AccordionTrigger>{item.name}</AccordionTrigger>
-                  <AccordionContent>
-                    <div className="space-y-2">
-                      <div className="flex items-center space-x-2">
-                        <Checkbox 
-                          id={`nasa-${item.id}`} 
-                          checked={selectedLayers.includes(item.id)}
-                          onValueChange={() => toggleLayer(item.id)}
-                        />
-                        <label htmlFor={`nasa-${item.id}`} className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                          Show on map
-                        </label>
-                      </div>
+          <AccordionSection title="NASA Data" icon={Satellite}>
+            {nasaData.map((item) => (
+              <AccordionItem value={item.id} key={item.id} className="border-b-0">
+                <AccordionTrigger className="hover:no-underline hover:bg-[#2a2a2a] py-2 px-4">
+                  {item.name}
+                </AccordionTrigger>
+                <AccordionContent className="pt-1 pb-2">
+                  <div className="space-y-2 px-4">
+                    <div className="flex items-center space-x-2">
+                      <Checkbox 
+                        id={`nasa-${item.id}`} 
+                        checked={selectedLayers.includes(item.id)}
+                        onCheckedChange={() => toggleLayer(item.id)}
+                        className="border-gray-600 text-blue-500"
+                      />
+                      <label htmlFor={`nasa-${item.id}`} className="text-sm font-medium leading-none cursor-pointer">
+                        Show on map
+                      </label>
                     </div>
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
-          </div>
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </AccordionSection>
         </div>
       </ScrollArea>
 
-      <Separator />
-
-      <div className="p-4 border-t">
-        <h2 className="text-lg font-semibold mb-2">Map Controls</h2>
-        <div className="flex space-x-2">
-          <Button size="icon" variant="outline"><ZoomIn className="h-4 w-4" /></Button>
-          <Button size="icon" variant="outline"><ZoomOut className="h-4 w-4" /></Button>
-          <Button size="icon" variant="outline"><Maximize className="h-4 w-4" /></Button>
-          <Button size="icon" variant="outline"><RotateCcw className="h-4 w-4" /></Button>
-        </div>
       </div>
+  )
+}
+
+function AccordionSection({ title, icon: Icon, children }) {
+  return (
+    <div>
+      <h2 className="text-lg font-semibold mb-2 flex items-center">
+        <Icon className="mr-2 h-5 w-5" /> {title}
+      </h2>
+      <Accordion type="single" collapsible className="w-full">
+        {children}
+      </Accordion>
+    </div>
+  )
+}
+
+function Section({ title, icon: Icon, children }) {
+  return (
+    <div>
+      <h2 className="text-lg font-semibold mb-2 flex items-center">
+        <Icon className="mr-2 h-5 w-5" /> {title}
+      </h2>
+      {children}
     </div>
   )
 }
