@@ -7,7 +7,8 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import Nav from "@/components/nav"
 import Vision from '@/components/mission'
-import Image from 'next/image'
+import Link from 'next/link'
+
 
 const BackgroundIllustration = () => (
   <svg
@@ -146,9 +147,11 @@ export  function LandingPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
+            <Link href={"/map"}>
             <Button size="lg" className="bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 hover:shadow-lg">
               Explore Data <ChevronRight className="ml-2 h-4 w-4" />
             </Button>
+            </Link>
           </motion.div>
         </div>
       </section>
