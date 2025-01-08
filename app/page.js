@@ -28,7 +28,7 @@ const BackgroundIllustration = () => (
       </linearGradient>
     </defs>
     
-    {/* Background */}
+    
     <rect width="100%" height="100%" fill="url(#bg-gradient)" />
     
     {/* Stars */}
