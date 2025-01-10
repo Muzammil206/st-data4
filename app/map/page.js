@@ -7,10 +7,7 @@ export default function SatelliteDataVisualization() {
       <Sidebar />
       <div className="flex-1 ">
         
-        <div 
-          className=""
-  
-        >
+        <div >
           <EsriMap />
         </div>
       </div>
