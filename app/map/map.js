@@ -9,7 +9,7 @@ const EsriMap = () => {
   const mapRef = useRef(null);
 
   useEffect(() => {
-    let view; // Reference to the MapView instance
+    let view; 
 
     if (mapRef.current) {
       const baseMap = new Map({

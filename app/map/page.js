@@ -1,5 +1,17 @@
 import { Sidebar } from '@/components/sidebar'
-import EsriMap from './map.js'
+import dynamic from "next/dynamic";
+import ResizeObserver from "resize-observer-polyfill";
+
+if (typeof window === "undefined") {
+    global.ResizeObserver = ResizeObserver;
+}
+
+
+
+
+const EsriMap = dynamic(() => import('./map.js'), {
+  ssr: false,
+});
 
 export default function SatelliteDataVisualization() {
   return (
