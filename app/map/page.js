@@ -1,16 +1,17 @@
 import { Sidebar } from '@/components/sidebar'
+import EsriMap from './map.js'
 
 export default function SatelliteDataVisualization() {
   return (
     <div className="flex h-screen">
       <Sidebar />
-      <div className="flex-1 bg-gray-100">
+      <div className="flex-1 ">
         
         <div 
-          className="w-full h-full bg-cover bg-center"
-          style={{backgroundImage: "url('/placeholder.svg?height=1080&width=1920')"}}
+          className=""
+  
         >
-          
+          <EsriMap />
         </div>
       </div>
     </div>
