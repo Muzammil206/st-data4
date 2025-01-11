@@ -7,8 +7,6 @@ if (typeof window === "undefined") {
 }
 
 
-
-
 const EsriMap = dynamic(() => import('./map.js'), {
   ssr: false,
 });
