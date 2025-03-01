@@ -133,7 +133,7 @@ export default function Nav() {
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
           <Button asChild variant="outline" className="text-blue-300 border-blue-500 hover:bg-blue-900/50 hover:text-blue-100 transition-all duration-300">
-            <Link href="/login">Log in</Link>
+            <Link href="/Login">Log in</Link>
           </Button>
         </div>
       </nav>
@@ -188,7 +188,7 @@ export default function Nav() {
                 </div>
                 <div className="py-6">
                   <Button asChild variant="outline" className="w-full text-white border-white hover:bg-white hover:text-black transition-colors">
-                    <Link href="/login">Log in</Link>
+                    <Link href="/Login">Log in</Link>
                   </Button>
                 </div>
               </div>
